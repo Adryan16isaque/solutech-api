@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <div class="secao-post">
+                <h1>Buscar post por id</h1>
+
+                <input type="text" id="idPost" name="idPost" placeholder="Informe o id do post">
+
+                <button id="btnBuscarPost">Buscar Post</button>
+            </div>
+
+            <br>
+
+            <div class="secao-post">
+                <h1>Buscar todos os posts</h1>
+
+                <button id="btnBuscarTodos">Buscar todos os Posts</button>
+            </div>
+
+            <br>
+
+            <div class="secao-post">
+                <h1>Criar novo Post</h1>
+
+                <input type="text" id="titulo" name="title" placeholder="Informe o title do Post"><br><br>
+
+                <textarea name="conteudo" id="conteudo" cols="20" rows="4"></textarea><br><br>
+                <button id="btnCriarPost">Criar Post</button>
+            </div>
+            <br>
+
+            <div class="secao-post">
+                <h1>Atualizar Post</h1>
+
+                <input type="text" name="novoId" id="novoId" placeholder="insira novo ID"><br><br>
+
+                <input type="text" name="novoTitulo" id="novoTitulo" placeholder="insira novo titulo"><br><br>
+
+                <button id="btnAtualizarPost">Atualizar</button>
+            </div>
+
+            <div class="secao-post">
+                <h1>Deletar Post</h1>
+
+                <input type="text" name="id" id="buscarId" placeholder="Insira o ID para delete">
+
+                <button id="btnDeletarPost"> Deletar</button>
+            </div>
+            <br>
+
+
+
+            <div id="resultado"></div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>
