@@ -30,6 +30,11 @@ btnBuscarUsuario.addEventListener('click', () => buscarUsuario());
 function buscarPost() {
     limparResultado()
     const valorId = inputId.value;
+
+    if (valorId == "") {
+        verificacao()
+        return
+    }
     fetch(`https://jsonplaceholder.typicode.com/posts/${valorId}`)
         .then((response) => response.json())
         .then((json) =>
@@ -39,6 +44,7 @@ function buscarPost() {
 
 function buscarTodosPosts() {
     limparResultado()
+
     fetch(`https://jsonplaceholder.typicode.com/posts/`)
         .then((response) => response.json())
         .then((json) => {
@@ -56,6 +62,11 @@ function criarPost() {
     limparResultado()
     const valorTitulo = titulo.value;
     const valorconteudo = conteudo.value;
+
+    if (valorTitulo || valorconteudo == "") {
+        verificacao()
+        return
+    }
 
     fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
@@ -78,6 +89,12 @@ function atualizarPost() {
     limparResultado()
     const valorNovoId = novoId.value;
     const valorNovoTitulo = novoTitulo.value;
+
+    if (valorNovoId || valorNovoTitulo == "") {
+        verificacao()
+        return
+    }
+
 
     fetch(`https://jsonplaceholder.typicode.com/posts/${valorNovoId}`, {
         method: 'PUT',
@@ -106,8 +123,11 @@ function deletarPost() {
 }
 
 function buscarUsuario() {
-    limparResultado()
     const valorId = buscarUsuarios.value
+    if (valorId == "") {
+        verificacao()
+        return
+    }
 
     fetch(`https://jsonplaceholder.typicode.com/users/${valorId}`)
         .then((response) => {
@@ -125,6 +145,12 @@ function limparResultado() {
     resultado.innerHTML = ``
 }
 
+function verificacao() {
+    if (true) {
+        resultado.innerHTML = 'Digite nos campos proporcionados!'
+        return
+    }
+}
 
 function exibirUsuario(resultadoUsuario) {
     resultado.innerHTML = `            
@@ -148,7 +174,6 @@ function exibir(resultadoPadrao) {
                 "body": "${resultadoPadrao.body}"}<br>
             
             `
-    console.log(Boolean(resultadoUsuario))
 }
 
 
