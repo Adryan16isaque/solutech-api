@@ -2,8 +2,9 @@ const btnBuscarPost = document.querySelector('#btnBuscarPost');
 const btnBuscarTodos = document.querySelector('#btnBuscarTodos');
 const btnCriarPost = document.querySelector('#btnCriarPost');
 const btnAtualizarPost = document.querySelector('#btnAtualizarPost');
-
 const btnDeletarPost = document.querySelector('#btnDeletarPost');
+
+const btnBuscarUsuario = document.querySelector('#btnBuscarUsuario')
 
 
 
@@ -13,15 +14,18 @@ const titulo = document.querySelector('#titulo');
 const conteudo = document.querySelector('#conteudo');
 const novoId = document.querySelector('#novoId');
 const novoTitulo = document.querySelector('#novoTitulo');
+const buscarUsuarios = document.querySelector('#buscarUsuarios');
 
 const buscarId = document.querySelector('#buscarId');
 
 
-btnBuscarPost.addEventListener('click', () => buscarPost())
-btnBuscarTodos.addEventListener('click', () => buscarTodosPosts())
-btnCriarPost.addEventListener('click', () => criarPost())
-btnAtualizarPost.addEventListener('click', () => atualizarPost())
-btnDeletarPost.addEventListener('click', () => deletarPost())
+btnBuscarPost.addEventListener('click', () => buscarPost());
+btnBuscarTodos.addEventListener('click', () => buscarTodosPosts());
+btnCriarPost.addEventListener('click', () => criarPost());
+btnAtualizarPost.addEventListener('click', () => atualizarPost());
+btnDeletarPost.addEventListener('click', () => deletarPost());
+btnBuscarUsuario.addEventListener('click', () => buscarUsuario());
+
 
 function buscarPost() {
     limparResultado()
@@ -101,17 +105,50 @@ function deletarPost() {
         .then((response) => resultado.innerHTML = ` ${response.status}`)
 }
 
+function buscarUsuario() {
+    limparResultado()
+    const valorId = buscarUsuarios.value
+
+    fetch(`https://jsonplaceholder.typicode.com/users/${valorId}`)
+        .then((response) => {
+            if (response.status == 404) {
+                resultado.innerHTML = `Usuario nao identificado, temos apenas 10 usuários!!`
+                return
+            }
+            return response.json()
+        })
+        .then(json => exibirUsuario(json)
+        )
+}
+
 function limparResultado() {
     resultado.innerHTML = ``
 }
 
-function exibir(json) {
-    resultado.innerHTML = `
-            
-            {   "userId": ${json.userId},<br><br>
-                "id": ${json.id},<br><br>
-                "title": "${json.title}",<br><br>
-                "body": "${json.body}"}<br>
-            
+
+function exibirUsuario(resultadoUsuario) {
+    resultado.innerHTML = `            
+            { <br>
+                "id": ${resultadoUsuario.id},<br><br>
+                "website": "${resultadoUsuario.website}",<br><br>
+                "name": ${resultadoUsuario.name},<br><br>
+                "username": "${resultadoUsuario.username}",<br><br>
+                "email": "${resultadoUsuario.email}"}<br><br>
+                "phone": "${resultadoUsuario.phone}"}<br>
+            }
             `
 }
+
+function exibir(resultadoPadrao) {
+    resultado.innerHTML = `
+            
+            {   "userId": ${resultadoPadrao.userId},<br><br>
+                "id": ${resultadoPadrao.id},<br><br>
+                "title": "${resultadoPadrao.title}",<br><br>
+                "body": "${resultadoPadrao.body}"}<br>
+            
+            `
+    console.log(Boolean(resultadoUsuario))
+}
+
+
