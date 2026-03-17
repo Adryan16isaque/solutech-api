@@ -36,11 +36,16 @@ function buscarPost() {
         return
     }
     fetch(`https://jsonplaceholder.typicode.com/posts/${valorId}`)
-        .then((response) => response.json())
-        .then((json) =>
-            exibir(json)
-        )
+        .then((response) => {
+            if (response.status == 404) {
+                resultado.innerHTML = `Post nao identificado. Digite um número valido, temos apenas 100 posts!!`
+                return
+            }
+            return response.json()
+        })
+        .then((json) => exibir(json))
 }
+
 
 function buscarTodosPosts() {
     limparResultado()
@@ -63,10 +68,16 @@ function criarPost() {
     const valorTitulo = titulo.value;
     const valorconteudo = conteudo.value;
 
-    if (valorTitulo || valorconteudo == "") {
+    if (valorconteudo.trim() == "") {
         verificacao()
         return
     }
+
+    if (valorTitulo.trim() == "") {
+        verificacao()
+        return
+    }
+
 
     fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
@@ -90,7 +101,11 @@ function atualizarPost() {
     const valorNovoId = novoId.value;
     const valorNovoTitulo = novoTitulo.value;
 
-    if (valorNovoId || valorNovoTitulo == "") {
+    if (valorNovoId.trim() == "") {
+        verificacao()
+        return
+    }
+    if (valorNovoTitulo.trim() == "") {
         verificacao()
         return
     }
@@ -110,7 +125,10 @@ function atualizarPost() {
         },
     })
         .then((response) => response.json())
-        .then((json) => exibir(json));
+        .then((json) => exibir(json))
+        .catch(() => {
+            resultado.innerHTML = "Temos apenas 100 posts, digite um valor valido";
+        });
 }
 
 function deletarPost() {
@@ -144,6 +162,7 @@ function buscarUsuario() {
 function limparResultado() {
     resultado.innerHTML = ``
 }
+
 
 function verificacao() {
     if (true) {
