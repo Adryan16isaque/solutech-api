@@ -3,11 +3,11 @@ const btnBuscarTodos = document.querySelector('#btnBuscarTodos');
 const btnCriarPost = document.querySelector('#btnCriarPost');
 const btnAtualizarPost = document.querySelector('#btnAtualizarPost');
 const btnDeletarPost = document.querySelector('#btnDeletarPost');
+const btnBuscarUsuario = document.querySelector('#btnBuscarUsuario');
+const btnBuscarMensagem = document.querySelector('#btnBuscarMensagem');
 
-const btnBuscarUsuario = document.querySelector('#btnBuscarUsuario')
 
-
-
+const buscarId = document.querySelector('#buscarId');
 const resultado = document.querySelector('#resultado');
 const inputId = document.querySelector('#idPost');
 const titulo = document.querySelector('#titulo');
@@ -15,9 +15,7 @@ const conteudo = document.querySelector('#conteudo');
 const novoId = document.querySelector('#novoId');
 const novoTitulo = document.querySelector('#novoTitulo');
 const buscarUsuarios = document.querySelector('#buscarUsuarios');
-
-const buscarId = document.querySelector('#buscarId');
-
+const buscarComentarios = document.querySelector('#buscarComentarios');
 
 btnBuscarPost.addEventListener('click', () => buscarPost());
 btnBuscarTodos.addEventListener('click', () => buscarTodosPosts());
@@ -25,6 +23,8 @@ btnCriarPost.addEventListener('click', () => criarPost());
 btnAtualizarPost.addEventListener('click', () => atualizarPost());
 btnDeletarPost.addEventListener('click', () => deletarPost());
 btnBuscarUsuario.addEventListener('click', () => buscarUsuario());
+btnBuscarMensagem.addEventListener('click', () => buscarMensagem());
+
 
 
 function buscarPost() {
@@ -157,6 +157,28 @@ function buscarUsuario() {
         })
         .then(json => exibirUsuario(json)
         )
+}
+
+
+
+function buscarMensagem() {
+    limparResultado()
+    let soma = 0
+    valorId= buscarComentarios.value
+    fetch(`https://jsonplaceholder.typicode.com/comments`)
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json)
+            json.forEach(conta => {
+                if(conta.postId==valorId){
+                    soma+=1
+                    console.log(soma)
+
+                    resultado.innerHTML+= conta.body +`<br><br>`
+                }
+            });
+            resultado.innerHTML+= `Tem ao todo ${soma} textos`
+        })
 }
 
 function limparResultado() {
